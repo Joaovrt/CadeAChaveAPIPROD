@@ -85,7 +85,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<configuration>
@@ -93,7 +93,7 @@
 					<user>postgres</user>
 					<password>123</password>
 				</configuration>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 
