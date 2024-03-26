@@ -85,15 +85,15 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<configuration>
-					<url>jdbc:postgresql://db:5432/postgres</url>
-					<user>postgres</user>
-					<password>123</password>
+					<url>${DATABASE_URL}</url>
+					<user>${DATABASE_USERNAME}</user>
+					<password>${DATABASE_PASSWORD}</password>
 				</configuration>
-			</plugin> -->
+			</plugin>
 		</plugins>
 	</build>
 
