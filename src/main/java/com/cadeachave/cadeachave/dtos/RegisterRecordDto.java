@@ -5,6 +5,6 @@ import com.cadeachave.cadeachave.models.UserRoleEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record RegisterDto(@NotBlank String login, @NotBlank String password, @NotNull UserRoleEnum role, Long professor_id) {
+public record RegisterRecordDto(@NotBlank String login, @NotBlank String password, @NotNull UserRoleEnum role, Long professor_id) {
 
 }

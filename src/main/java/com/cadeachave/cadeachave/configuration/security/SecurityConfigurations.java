@@ -26,13 +26,13 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/sala/abrir").hasRole("HARDWARE")
                         .requestMatchers(HttpMethod.GET, "/api/sala/fechar").hasRole("HARDWARE")
+                        .requestMatchers(HttpMethod.POST, "/api/user/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/user/**").hasRole("ADMIN")
                         .requestMatchers(
                     		"/swagger-ui/**",
                     		"/v3/api-docs/**"
