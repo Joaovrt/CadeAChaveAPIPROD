@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cadeachave.cadeachave.dtos.AuthenticationRecordDto;
 import com.cadeachave.cadeachave.dtos.RegisterRecordDto;
-import com.cadeachave.cadeachave.dtos.RegisterRecordDto;
 import com.cadeachave.cadeachave.dtos.UpdateUserRecordDto;
 import com.cadeachave.cadeachave.models.UserModel;
 import com.cadeachave.cadeachave.services.UserService;
@@ -60,6 +59,7 @@ public class UserController {
         return userService.findById(id);
     }
 
+    @PutMapping(value="/{id}")
     public ResponseEntity<UserModel> update(@PathVariable(value = "id") String id, @RequestBody @Valid UpdateUserRecordDto updateDto){
         return userService.update(updateDto, id);
     }
