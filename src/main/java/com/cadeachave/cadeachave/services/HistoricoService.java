@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -57,7 +59,15 @@ public class HistoricoService {
         historico.setProfessor(professor);
         historico.setSala(sala);
         historico.setAbriu(abriu);
-        historico.setHorario(new Timestamp(System.currentTimeMillis()));
+        // Obtém o timezone para Horário de Brasília (GMT-3)
+        TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
+
+        // Cria um objeto Calendar com o timezone de Horário de Brasília
+        Calendar calendar = Calendar.getInstance(timeZone);
+
+        // Obtém o timestamp atual no timezone de Horário de Brasília
+        Timestamp horarioBrasilia = new Timestamp(calendar.getTimeInMillis());
+        historico.setHorario(horarioBrasilia);
         var historicoDtoCreated = convertToHistoricoResponseRecordDto(historicoRepository.save(historico));
         return ResponseEntity.status(HttpStatus.OK).body(historicoDtoCreated);
     }
@@ -69,7 +79,6 @@ public class HistoricoService {
             Timestamp dataHoraFinal = new Timestamp(dateFormat.parse(dataFinal).getTime());
 
             Page<HistoricoModel> historicoPage = historicoRepository.buscarHistoricoComFiltro(dataHoraInicial, dataHoraFinal, professorId, salaId, abriu, pageable);
-            logger.info(historicoPage.toString());
 
             List<HistoricoResponseRecordDto> historicoDtoList = new ArrayList<>();
             for (HistoricoModel historicoModel : historicoPage.getContent()) {
@@ -94,9 +103,17 @@ public class HistoricoService {
         }
         return false;
     }
+    
 
-     private HistoricoResponseRecordDto convertToHistoricoResponseRecordDto(HistoricoModel historico) {
+    private HistoricoResponseRecordDto convertToHistoricoResponseRecordDto(HistoricoModel historico) {
         ProfessorModel professor = historico.getProfessor();
+    
+        // Formata o timestamp para exibição com o fuso horário de Brasília
+        TimeZone timeZone = TimeZone.getTimeZone("America/Sao_Paulo");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        sdf.setTimeZone(timeZone);
+        String horarioFormatado = sdf.format(historico.getHorario());
+    
         return new HistoricoResponseRecordDto(
                 historico.getId(),
                 new ProfessorWithoutSalasRecordDto(
@@ -105,7 +122,7 @@ public class HistoricoService {
                         professor.getCpf()
                 ),
                 historico.getSala(),
-                historico.getHorario(),
+                horarioFormatado, // Utiliza o horário formatado
                 historico.isAbriu()
         );
     }
