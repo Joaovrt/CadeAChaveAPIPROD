@@ -34,59 +34,101 @@ public class UserModel implements UserDetails{
     @Column(nullable = false)
     private UserRoleEnum role;
 
+    @Column
+    private boolean ativo;
+
     @OneToOne
     @JoinColumn(name = "professor_id", referencedColumnName = "id", unique=true)
     private ProfessorModel professor;
+
+
     
 
-    public UserModel(String login, String password, UserRoleEnum role, ProfessorModel professor) {
+    public UserModel(String login, String password, UserRoleEnum role, ProfessorModel professor, boolean ativo) {
         this.login = login;
         this.password = password;
         this.role = role;
-        this.professor=professor;
+        this.ativo = ativo;
+        this.professor = professor;
     }
 
-    public UserModel() {}
+
 
     public String getId() {
         return id;
     }
 
+
+
     public void setId(String id) {
         this.id = id;
     }
+
+
 
     public String getLogin() {
         return login;
     }
 
+
+
     public void setLogin(String login) {
         this.login = login;
     }
+
+
 
     public String getPassword() {
         return password;
     }
 
+
+
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 
     public UserRoleEnum getRole() {
         return role;
     }
 
+
+
     public void setRole(UserRoleEnum role) {
         this.role = role;
     }
+
+
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+
 
     public ProfessorModel getProfessor() {
         return professor;
     }
 
+
+
     public void setProfessor(ProfessorModel professor) {
         this.professor = professor;
     }
+
+
+
+    public UserModel() {}
+
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -117,8 +159,10 @@ public class UserModel implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return ativo;
     }
+
+
 
     @Override
     public int hashCode() {
@@ -128,9 +172,12 @@ public class UserModel implements UserDetails{
         result = prime * result + ((login == null) ? 0 : login.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((role == null) ? 0 : role.hashCode());
+        result = prime * result + (ativo ? 1231 : 1237);
         result = prime * result + ((professor == null) ? 0 : professor.hashCode());
         return result;
     }
+
+
 
     @Override
     public boolean equals(Object obj) {
@@ -158,6 +205,8 @@ public class UserModel implements UserDetails{
             return false;
         if (role != other.role)
             return false;
+        if (ativo != other.ativo)
+            return false;
         if (professor == null) {
             if (other.professor != null)
                 return false;
@@ -165,6 +214,8 @@ public class UserModel implements UserDetails{
             return false;
         return true;
     }
+
+    
 
     
 }

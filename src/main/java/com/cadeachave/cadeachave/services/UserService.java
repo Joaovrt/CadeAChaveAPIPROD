@@ -66,6 +66,7 @@ public class UserService {
                 entity.setPassword(encryptedPassword);
             }
             entity.setRole(updateDto.role());
+            entity.setAtivo(updateDto.ativo());
             var savedUser = userRepository.save(entity);
             savedUser.setPassword(null); 
             return ResponseEntity.status(HttpStatus.OK).body(savedUser);
@@ -98,7 +99,7 @@ public class UserService {
             if(this.userRepository.findByProfessor(professor) != null) throw new ResourceBadRequestException("Professor ja cadastrado como usuario.");
         }
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        UserModel newUser = new UserModel(data.login(), encryptedPassword, data.role(), professor);
+        UserModel newUser = new UserModel(data.login(), encryptedPassword, data.role(), professor,true);
 
         UserModel userCreated =  this.userRepository.save(newUser);
         userCreated.setPassword(null);

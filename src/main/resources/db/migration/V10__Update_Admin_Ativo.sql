@@ -1,0 +1,1 @@
+update users set ativo=true where id ='6381b735-a469-4db2-974b-3851f810edd9';
