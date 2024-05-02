@@ -88,6 +88,7 @@ public class SalaService {
             var entity = salaRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Nenhuma sala encontrada com esse id."));
             entity.setNome(salaDto.nome());
             entity.setAberta(salaDto.aberta());
+            entity.setAtivo(salaDto.ativo());
             return ResponseEntity.status(HttpStatus.OK).body(salaRepository.save(entity));
         }
         catch (DataIntegrityViolationException e) {
@@ -106,7 +107,7 @@ public class SalaService {
         if(professor==null)
             throw new ResourceNotFoundException("Nenhum professor encontrado com o CPF: "+cpf);
         SalaModel sala = salaRepository.findByNome(nome);
-        if(sala==null)
+        if(sala==null||sala.isAtivo()!=true)
             throw new ResourceNotFoundException("Nenhuma sala encontrada com o nome: " +nome);
         if(professor.getSalas().contains(sala)){
             if(sala.isAberta())
@@ -126,8 +127,8 @@ public class SalaService {
         if(professor==null)
             throw new ResourceNotFoundException("Nenhum professor encontrado com o CPF: "+cpf);
         SalaModel sala = salaRepository.findByNome(nome);
-        if(sala==null)
-        throw new ResourceNotFoundException("Nenhuma sala encontrada com o nome: " +nome);
+        if(sala==null||sala.isAtivo()!=true)
+            throw new ResourceNotFoundException("Nenhuma sala encontrada com o nome: " +nome);
         if(professor.getSalas().contains(sala)){
             if(!sala.isAberta())
             throw new ResourceConflictException("Sala "+nome+" já está fechada.");

@@ -26,6 +26,9 @@ public class SalaModel implements Serializable{
     @Column(nullable = false)
     private boolean aberta;
 
+    @Column
+    private boolean ativo;
+
     public Long getId() {
         return id;
     }
@@ -50,6 +53,14 @@ public class SalaModel implements Serializable{
         this.aberta = aberta;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -57,6 +68,7 @@ public class SalaModel implements Serializable{
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + (aberta ? 1231 : 1237);
+        result = prime * result + (ativo ? 1231 : 1237);
         return result;
     }
 
@@ -81,6 +93,10 @@ public class SalaModel implements Serializable{
             return false;
         if (aberta != other.aberta)
             return false;
+        if (ativo != other.ativo)
+            return false;
         return true;
     }
+
+    
 }

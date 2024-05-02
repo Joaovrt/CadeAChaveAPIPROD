@@ -1,0 +1,1 @@
+alter table salas add column ativo boolean;
