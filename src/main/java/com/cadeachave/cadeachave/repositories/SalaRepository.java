@@ -10,7 +10,7 @@ import com.cadeachave.cadeachave.models.SalaModel;
 @Repository
 public interface SalaRepository extends JpaRepository<SalaModel,Long>{
     SalaModel findByNome(String nome);
-    Page<SalaModel> findByNomeContaining(String nome, Pageable pageable);
+    Page<SalaModel> findByNomeContainingIgnoreCase(String nome, Pageable pageable);
     Page<SalaModel> findByAberta(boolean aberta, Pageable pageable);
-    Page<SalaModel> findByNomeContainingAndAberta(String nome, boolean aberta, Pageable pageable);
+    Page<SalaModel> findByNomeContainingIgnoreCaseAndAberta(String nome, boolean aberta, Pageable pageable);
 }

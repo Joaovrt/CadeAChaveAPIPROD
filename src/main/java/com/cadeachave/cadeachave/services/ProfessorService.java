@@ -48,7 +48,7 @@ public class ProfessorService {
     }
 
     public Page<ProfessorModel> findByCpfOrNomeContaining(String termo, Pageable pageable) {
-        var professorList = professorRepository.findByCpfContainingOrNomeContaining(termo, termo, pageable);
+        var professorList = professorRepository.findByCpfContainingIgnoreCaseOrNomeContainingIgnoreCase(termo, termo, pageable);
         if (professorList.isEmpty()) {
             throw new ResourceNotFoundException("Nenhum professor encontrado com o CPF ou nome contendo: " + termo);
         }

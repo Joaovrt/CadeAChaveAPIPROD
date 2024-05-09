@@ -13,5 +13,5 @@ import com.cadeachave.cadeachave.models.ProfessorModel;
 public interface ProfessorRepository extends JpaRepository<ProfessorModel, Long>{
     ProfessorModel findByCpf(String cpf);
     List<ProfessorModel> findByNome(String nome);
-    Page<ProfessorModel> findByCpfContainingOrNomeContaining(String cpf, String nome, Pageable pageable);
+    Page<ProfessorModel> findByCpfContainingIgnoreCaseOrNomeContainingIgnoreCase(String cpf, String nome, Pageable pageable);
 }

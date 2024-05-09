@@ -45,7 +45,7 @@ public class SalaService {
     }
 
     public Page<SalaModel> findByNomeContaining(String termo, Pageable pageable){
-        var salaPage = salaRepository.findByNomeContaining(termo, pageable);
+        var salaPage = salaRepository.findByNomeContainingIgnoreCase(termo, pageable);
         if(salaPage.isEmpty())
             throw new ResourceNotFoundException("Nenhuma sala encontrada com o nome contendo: "+termo);
         return salaPage;
@@ -59,7 +59,7 @@ public class SalaService {
     }
 
     public Page<SalaModel> findByNomeContainingAndAberta(String nome, boolean aberta, Pageable pageable) {
-        var salaPage = salaRepository.findByNomeContainingAndAberta(nome, aberta, pageable);
+        var salaPage = salaRepository.findByNomeContainingIgnoreCaseAndAberta(nome, aberta, pageable);
         if (salaPage.isEmpty()) {
             throw new ResourceNotFoundException("Nenhuma sala encontrada com contendo o nome: "+nome+" e status correspondente a "+(aberta ? "aberta" : "fechada"));
         }
