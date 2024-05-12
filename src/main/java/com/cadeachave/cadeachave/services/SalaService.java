@@ -75,6 +75,7 @@ public class SalaService {
             SalaModel sala = new SalaModel();
             sala.setNome(salaDto.nome());
             sala.setAberta(salaDto.aberta());
+            sala.setAtivo(salaDto.ativo());
         
             return ResponseEntity.status(HttpStatus.CREATED).body(salaRepository.save(sala));
         }
